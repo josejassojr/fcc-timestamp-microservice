@@ -68,7 +68,7 @@ app.get(
 
 
 // listen for requests :)
-var port = process.env.PORT || 3000;
+var port = process.env.PORT;
 var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
   console.log("testing testing testing....");
