@@ -15,12 +15,9 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get("/copy-index", function(req, res) {
-  res.sendFile(__dirname + "/views/copy-index.html");
-});
 
 app.get(
   "/api",
