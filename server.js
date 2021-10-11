@@ -18,15 +18,58 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+app.get("/copy-index", function(req, res) {
+  res.sendFile(__dirname + "/views/copy-index.html");
 });
+
+app.get(
+  "/api",
+  function(req, res, next) {
+    var date = new Date();
+    // console.log(req.time);
+    req.utc = date.toUTCString();
+    req.unix = Date.parse(req.utc);
+    next();
+  },
+  function(req, res) {
+    res.json({ unix: req.unix, utc: req.utc });
+  }
+);
+
+
+app.get(
+  "/api/:date",
+  function (req, res, next) {
+    req.code = 1;
+    var date = new Date(req.params.date).toUTCString();
+    if (date === "Invalid Date") {
+      if (isNaN(Number(req.params.date))) {
+        req.code = -1;
+        console.log("Yikes");
+        next();
+      } else {
+        date = new Date(Number(req.params.date)).toUTCString();
+      }
+    }
+    req.utc = date;
+    req.unix = Date.parse(req.utc);
+    next();
+  },
+  function (req, res) {
+    if (req.code === -1) {
+      res.json({ error: "Invalid Date" });
+    } else {
+      res.json({ unix: req.unix, utc: req.utc });
+    }
+  }
+);
+
 
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var port = process.env.PORT || 3000;
+var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
+  console.log("testing testing testing....");
 });
