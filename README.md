@@ -4,7 +4,7 @@ A microservice designed to return a timestamp (UTC) of any date input!
 
 ## Techs Used
 
-[Node.js](hhttps://nodejs.org/en/) and CSS
+[Node.js](https://nodejs.org/en/) and CSS
 
 ## Preview of Site
 
